@@ -5,13 +5,16 @@ import com.muamalat.springboot.entity.Product;
 import com.muamalat.springboot.pojo.ReqRes;
 import com.muamalat.springboot.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @RestController
 public class AdminUsers {
@@ -48,5 +51,22 @@ public class AdminUsers {
         System.out.println(authentication.getDetails()); // get remote ip
         System.out.println(authentication.getName()); //returns the email because the email is the unique identifier
         return authentication.getName(); // returns the email
+    }
+
+    @GetMapping("/adminuser/profilepicture")
+    public ResponseEntity<Object> profilePicture(@RequestParam String filename){
+        try {
+            Path root = Paths.get("uploads");
+//            Path file = root.resolve(filename);
+            Resource resource = new UrlResource(root.toUri());
+
+            if (resource.exists() || resource.isReadable()) {
+                return ResponseEntity.ok().body(resource);
+            } else {
+                throw new RuntimeException("Could not read the file!");
+            }
+        } catch (MalformedURLException e) {
+            throw new RuntimeException("Error: " + e.getMessage());
+        }
     }
 }

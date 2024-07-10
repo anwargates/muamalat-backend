@@ -1,7 +1,6 @@
 package com.muamalat.springboot.config;
 
 import com.muamalat.springboot.service.JWTUtils;
-import com.muamalat.springboot.service.JwtService;
 import com.muamalat.springboot.service.OurUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

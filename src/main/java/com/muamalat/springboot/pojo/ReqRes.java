@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.muamalat.springboot.entity.OurUser;
 import com.muamalat.springboot.entity.Product;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -25,5 +26,4 @@ public class ReqRes {
     private String password;
     private List<Product> products;
     private OurUser users;
-
 }
